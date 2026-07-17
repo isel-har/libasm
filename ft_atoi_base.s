@@ -90,131 +90,138 @@ _ret_0:
 	ret
 
 
-
 ;============================================
 
-; _char_position:
+; .char_position:
+
 ; 	xor rcx, rcx
-; 	xor eax, eax
 
-; __loop_:
+; .cp_loop:
 
-; 	cmp qword [rdi + rcx], 0
-; 	je __end_
+; 	mov dl, byte [rdi + rcx]
+; 	cmp dl, 0
+; 	je .cp_end
 
-; 	cmp byte [rdi + rcx], dil
-; 	je __pos
+; 	cmp dl, dil
+; 	je .return_pos
 
-; 	inc eax
-; 	jmp __loop_
+; 	inc rcx
+; 	jmp .cp_loop
 
-; __pos:
+; .cp_end:
+; 	mov rcx, -1
 ; 	ret
 
-; __end_:
-; 	mov eax, -1
+; .return_pos:
 ; 	ret
 
 
 _ft_atoi_base:
 
-	; push rbp
-	; mov rbp, rsp
-	; sub rsp, 48
+	;initialize stack frame with 48 bytes
+	push rbp
+	mov rbp, rsp
+	sub rsp, 48
 
-	; mov qword [rbp - 8], rdi
-	; mov qword [rbp - 16], rsi
+	mov qword [rbp - 8], rdi ; first arg
+	mov qword [rbp - 16], rsi ; second arg
 
+	mov qword [rbp - 24], 0; result
+	mov qword [rbp - 32], 1 ; sign
+
+
+	mov rdi, rsi
 	call _valid_base
 	cmp eax, 0
-	; xor rax, rax
-	je .return_zero
-	; ret
+	je return_
+
 	call strlen
-	cmp rax, 2
-	jl .return_zero
+	mov qword [rbp - 36], rax
+	xor rax, rax
 
-	mov rax, 1
+	mov rdi, qword [rbp - 8]
 
-	; mov eax, dword rax
-	; mov eax, dword rax
-	; jmp .return_
-; 	mov qword [rbp - 24], rax; base length
-; 	mov qword [rbp - 32], 0 ; result
-; 	mov dword [rbp - 40], 1 ; sign
-; 	; mov dword [rbp - 44],
+.skip_spaces:
 
-; 	xor rax, rax
+	mov dl, byte [rdi + rax]
 
-; .skip_spaces:
-
-; 	mov dl, byte [rdi + rax]
-; 	cmp dl, 32
-; 	jne _update_sign
-; 	cmp dl, 9
-; 	jnge _update_sign
-; 	cmp dl, 13
-; 	jnle _update_sign
+	cmp dl, 32
+	jne _update_sign
+	; cmp dl, 9
+	; jnge .update_sign
+	; cmp dl, 13
+	; jnle .update_sign
 
 
-; 	inc rax
-; 	jmp .skip_spaces
+	inc rax
+	jmp .skip_spaces
+	; mov eax, dword [rbp - 32]
+
+_update_sign:
+
+	mov dl, byte [rdi + rax]
+
+	cmp dl, 45
+	jne _check_plus
+
+_check_sign:
+	cmp dl, 45
+	je neg_
+
+_inc:
+	inc rax
+	jmp _update_sign
+
+neg_:
+
+	mov rbx, qword [rbp - 32]
+	neg rbx
+	mov qword [rbp - 32], rbx
+	jmp _inc
 
 
-; _update_sign:
-
-; 	mov dl, [rdi + rax]
-; 	cmp dl, 45
-; 	jne _convert_dec
-; 	cmp dl, 43
-; 	jne _convert_dec
-
-; 	cmp dl, 45
-
-; 	mov eax, dword [rbp - 40]
-; 	neg eax
-; 	mov dword [rbp - 40], eax
-
-; 	inc rax
-; 	jmp _update_sign
+_check_plus:
+	cmp dl, 43
+	jne _end_skip
+	jmp _inc
 
 
-; _convert_dec:
+
+
+_end_skip:
+	jmp return_
 
 ; 	mov dil, byte [rdi + rax]
-; 	call _char_position
+; 	call char_position
+; 	; mov qword [rbp - 24], rcx
 
-; 	mov dword [rbp - 44], eax
-	
-; _convert_loop:
+; .convert_loop:
 
 ; 	mov dl, byte [rdi + rax]
+
 ; 	cmp dl, 0
-; 	je _return
+; 	je .convert_end
 ; 	cmp dl, -1
-; 	je _return
+; 	je .convert_end
 
+; 	mov rdx, qword [rbp - 20]
+; 	mul rdx, qword [rbp - 8]
+; 	add rdx, rcx
 
-; 	mov rbx, dword [rbp - 32]
-; 	mul rbx, qword [rbp - 24]
-
-; 	add rbx, eax
 ; 	inc rax
 
-; 	call _char_position
+; 	mov dil, byte [rdi + rax]
+; 	call char_position
 
-; 	jmp _convert_loop
+; 	jmp .convert_loop
 
-; _return:
-; 	mov eax, qword rbx
-; 	mul eax, dword [rbp - 40]
-; 	ret
+; .convert_end:
 
+; 	mov eax, dword [rbp - 16]
+; 	mov ebx, dword [rbp - 20]
+; 	mul eax, ebx
 
-
-
-.return_zero:
-	; pop rbp
-	; add rsp, 48
-	xor rax, rax
+return_:
+	add rsp, 48
+	pop rbp
 	ret
