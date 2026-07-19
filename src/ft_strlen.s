@@ -1,7 +1,7 @@
 section .text
-    global _ft_strlen
+    global ft_strlen
 
-_ft_strlen:
+ft_strlen:
 
     xor rax, rax ; is similar to mov rax, 0 but preferred for nano-optimization (faster)
 

@@ -1,7 +1,7 @@
 section .text
-    global _ft_list_sort
+    global ft_list_sort
 
-_ft_list_sort:
+ft_list_sort:
 
     ;rdi first arg, rsi second arg
 

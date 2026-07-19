@@ -1,9 +1,9 @@
-extern _malloc
+extern malloc
 
 section .text
-    global _ft_create_elem
+    global ft_create_elem
 
-_ft_create_elem:
+ft_create_elem:
 
     ; 1-arg rdi holds the data address of the struct
 
@@ -11,7 +11,7 @@ _ft_create_elem:
 
     mov rdi, 16
 
-    call _malloc
+    call malloc
 
     ;rax here holds the new address with size of 16 bytes
     cmp rax, 0

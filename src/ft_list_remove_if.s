@@ -1,7 +1,7 @@
 section .text
-    global _ft_list_remove_if
+    global ft_list_remove_if
 
-_ft_list_remove_if:
+ft_list_remove_if:
 
 _1:
 
@@ -59,7 +59,7 @@ _4: ; if equal here!
 	mov	rdx, qword  [rbp - 24]
 	mov	rcx, qword  [rbp - 32]
 
-	call	_ft_list_remove_if
+	call	ft_list_remove_if
 	jmp	_end
 
 _3:
@@ -73,7 +73,7 @@ _3:
 	mov	rdx, qword  [rbp - 24]
 	mov	rcx, qword  [rbp - 32]
 
-    call _ft_list_remove_if
+    call ft_list_remove_if
 
 _end:
     add rsp, 48

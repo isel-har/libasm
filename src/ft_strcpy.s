@@ -1,8 +1,8 @@
 section .text
-    global _ft_strcpy
+    global ft_strcpy
 
 
-_ft_strcpy:
+ft_strcpy:
     ;1-arg:rdi, 2-arg:rsi
     xor rax, rax ; initialize rax to zero with xor operation as optimized convention
 

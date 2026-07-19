@@ -1,9 +1,9 @@
-extern ___error
+extern _error_location
 
 section .text
-    global _ft_write
+    global ft_write
 
-_ft_write:
+ft_write:
 
     ;1-arg: rdi, 2-arg: rsi, 3-arg: rdx 
 
@@ -19,8 +19,8 @@ _handle_error:
     neg rax                     ; Invert negative error code to a positive value
     push rax                    ; Save the error code on the stack to protect it
 
-    ; Call ___error to get the memory address of errno
-    call ___error       ; Pointer to errno is now returned in rax
+    ; Call _error_location to get the memory address of errno
+    call _error_location      ; Pointer to errno is now returned in rax
 
     pop rdi                     ; Retrieve our positive error code into rdi
     mov [rax], edi              ; Move the 32-bit error integer into the errno memory address

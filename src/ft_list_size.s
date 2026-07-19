@@ -1,8 +1,8 @@
 section .text
-    global _ft_list_size
+    global ft_list_size
 
 
-_ft_list_size:
+ft_list_size:
 
     ; 1 rdi, pointer to list
     xor eax, eax ; initialize the eax

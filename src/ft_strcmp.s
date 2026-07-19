@@ -1,7 +1,7 @@
 section .text
-    global _ft_strcmp
+    global ft_strcmp
 
-_ft_strcmp:
+ft_strcmp:
     xor rax, rax ; initialize rax register to zero using xor
 
 _start_loop:
