@@ -4,21 +4,20 @@ section .text
 
 ft_list_size:
 
-    ; 1 rdi, pointer to list
-    xor eax, eax ; initialize the eax
+    xor eax, eax ; initize eax with zero
+
+__loop:
+
+    cmp rdi, 0 ; compare current address with null
+    je __end ; if equal go return
+
+    inc eax ; impact the rax register also
 
 
-_start_loop:
+    mov rdx, [rdi + 8] ; copy the next node address to rdx
+    mov rdi, rdx ; then update rdi register by the next address
 
-    cmp rdi, 0
-    je _end_loop
+    jmp __loop ; jmp to __loop
 
-
-    inc eax
-    mov rdi, [rdi + 8]
-
-    jmp _start_loop
-
-
-_end_loop:
+__end:
     ret

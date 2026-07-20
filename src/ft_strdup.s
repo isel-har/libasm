@@ -3,10 +3,9 @@ extern ft_strcpy
 extern malloc
 
 section .text
-    global _ft_strdup
+    global ft_strdup
 
-
-_ft_strdup:
+ft_strdup:
 
     ;1-arg: rdi, 2-arg: rsi, 3-arg: rdx
 

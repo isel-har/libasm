@@ -12,7 +12,7 @@ ft_list_sort:
     cmp rdi, 0
     je _end_loop
     
-    cmp [rdi], 0
+    cmp qword [rdi], 0
     je _end_loop
 
     cmp rsi, 0

@@ -1,4 +1,4 @@
-extern _error_location
+extern __errno_location
 
 section .text
     global ft_read
@@ -21,7 +21,7 @@ _handle_error:
     push rax                    ; Save the error code on the stack to protect it
 
     ; Call _error_location to get the memory address of errno
-    call _error_location       ; Pointer to errno is now returned in rax
+    call __errno_location ;     ; Pointer to errno is now returned in rax
 
     pop rdi                     ; Retrieve our positive error code into rdi
     mov [rax], edi              ; Move the 32-bit error integer into the errno memory address

@@ -67,7 +67,7 @@ int main(void)
     printf("return value : %zd\n", wb);
 
 
-    wb = ft_write(1, "Testing ft_write with stdout\n", 29);
+    wb = ft_write(ofd, "Testing ft_write with stdout\n", 29);
     printf("return value : %zd\n", wb);
 
     wb = ft_write(-8, "Testing ft_write with stdout\n", 29);
@@ -91,6 +91,50 @@ int main(void)
     free(newstr);
     newstr = ft_strdup(str);
     printf("len allocated :%zu\n", ft_strlen(newstr));
+    free(newstr);
+
+    printf("==============bonus part==============\n\n");
+
+
+    printf("==============ft_atoi_base test==============\n");
+
+
+    printf("result :%d\n", ft_atoi_base("42", "0123456789abcdef"));
+    printf("result :%d\n", ft_atoi_base("42", "2"));
+    printf("result :%d\n", ft_atoi_base("42", "314"));
+    
+
+
+    printf("==============linked list test==============\n");
+
+
+    t_list *begin = NULL;
+
+    ft_list_push_front(&begin, (char *)"1 node");
+    ft_list_push_front(&begin, (char *)"4 node");
+    ft_list_push_front(&begin, (char *)"9 node");
+    ft_list_push_front(&begin, (char *)"6 node");
+    ft_list_push_front(&begin, (char *)"3 node");
+    ft_list_push_front(&begin, (char *)"2 node");
+    ft_list_push_front(&begin, (char *)"5 node");
+    ft_list_push_front(&begin, (char *)"8 node");
+    ft_list_push_front(&begin, (char *)"10 node");
+    ft_list_push_front(&begin, (char *)"7 node");
+
+    printf("list size : %d\n", ft_list_size(begin));
+
+    
+    
+    ft_list_remove_if(&begin, (char *)"10 node", ft_strcmp, free);
+    printf("node 10 removed!\n");
+    
+    ft_list_sort(&begin, ft_strcmp);
+
+    t_list *tmp = begin;
+    while (tmp != NULL) {
+        printf("%s\n", (char *)tmp->data);
+        tmp = tmp->next;
+    }
 
     return 0;
 }
